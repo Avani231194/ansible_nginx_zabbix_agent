@@ -1,0 +1,3 @@
+[testing]    #Any_Group_Name
+IP ansible_become=yes
+

@@ -1,0 +1,80 @@
+---
+
+#Installing the Nginx
+- name: update cache and install nginx
+  apt:
+    name: "{{ nginx_package_name }}"
+    update_cache: yes
+
+
+#Creating a user by the name of avanis
+- user:
+    name: avanis
+    comment: "avanisinghal"
+    home: /home/avanis
+    password: avanisinghal
+
+
+#Deleting predefined links
+- name: Delete file example
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+#Create Directory
+
+- file:
+    path: /var/www
+    state: directory
+    mode: 0755
+
+- file:
+    path: /var/www/html
+    state: directory
+    mode: 0755
+
+
+# nginx configuration
+- name: copy nginx configuration file
+  template:
+    src: "{{ nginx_conf_template }}"
+    dest: "{{ nginx_conf_path }}/nginx.conf"
+    owner: root
+    mode: 0775
+  become: true
+  notify:
+  - reload nginx
+
+#Creating symlink
+- file:
+    src: '/etc/nginx/sites-available/nginx.conf'
+    dest: '/etc/nginx/sites-enabled/nginx.conf'
+    owner: 'root'
+    mode: 0644
+    state: link
+ 
+
+
+#Host file
+- name: Host file
+  template:
+    src: "{{ nginx_conf_test }}"
+    dest: "{{ nginx_path_to_template }}/index.html"
+    owner: root
+    mode: 0775
+  become: true
+  notify:
+  - reload nginx
+
+
+
+#Start and enable the nginx
+- name: ensure nginx is started and enabled to start at boot
+  service: name=nginx state=started enabled=yes
+  tags: service enabled
+  notify: validate nginx configuration
+
+
+- name: Including zabbix_conf
+  include: zabbix_agentd.yml
+

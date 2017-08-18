@@ -1,0 +1,4 @@
+---
+- hosts: NAME_OF_YOUR_HOST_GROUP_DEFINED_IN_HOSTS_FILE
+  roles:
+    - { role: PATH_TO_YOUR_ROLE }

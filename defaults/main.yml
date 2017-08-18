@@ -1,0 +1,17 @@
+---
+
+nginx_package_name: "nginx"
+nginx_conf_template: "nginx.conf.j2"
+nginx_conf_path: "/etc/nginx/sites-available"
+nginx_path_to_template: "/var/www/html"
+nginx_conf_test: "index.html.j2"
+zabbix_server: "192.168.0.99"
+ansi_Hostname: "{{ ansible_hostname }}"
+path_PidFile: "/var/run/zabbix/zabbix_agentd.pid"
+path_LogFile: "/var/log/zabbix-agent/zabbix_agentd.log"
+
+
+
+
+
+
