@@ -1,4 +1,4 @@
 ---
-- hosts: NAME_OF_YOUR_HOST_GROUP_DEFINED_IN_HOSTS_FILE
+- hosts: ubuntu@ec2-52-6-56-192.compute-1.amazonaws.com
   roles:
-    - { role: PATH_TO_YOUR_ROLE }
+    - { role: ansible_nginx_zabbix_agent }
